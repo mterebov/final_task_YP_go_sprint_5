@@ -35,7 +35,7 @@ func (ds *DaySteps) Parse(datastring string) (err error) {
 	}
 	// Сохраняем расшитые данные в поля структуры
 	ds.Steps = steps
-	ds.Duration = timeDur
+	ds.Duration =  timeDur
 	return nil
 }
 
