@@ -13,14 +13,14 @@ type DataParser interface {
 func Info(dataset []string, dp DataParser) {
 
 	for _, v := range dataset {
-		errPars := dp.Parse(v)
-		if errPars != nil {
-			log.Println(errPars)
+		err := dp.Parse(v)
+		if err != nil {
+			log.Println(err)
 			continue
 		}
-		outStr, errActionInfo := dp.ActionInfo()
-		if errActionInfo != nil {
-			log.Println(errActionInfo)
+		outStr, err := dp.ActionInfo()
+		if err != nil {
+			log.Println(err)
 			continue
 		}
 		fmt.Println(outStr)

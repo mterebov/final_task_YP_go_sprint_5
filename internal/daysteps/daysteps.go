@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
-
+	"errors"
 	"github.com/Yandex-Practicum/tracker/internal/personaldata"
 	"github.com/Yandex-Practicum/tracker/internal/spentenergy"
 )
@@ -25,13 +25,19 @@ func (ds *DaySteps) Parse(datastring string) (err error) {
 	// Приводим элементы слайса к необходимым типам данных
 	// Обрабатываем ошибки
 	steps, err := strconv.Atoi(splittedData[0])
-	if err != nil || steps <= 0 {
-		return fmt.Errorf("bad data: steps")
+	if err != nil {
+		return err
+	}
+	if steps <= 0 {
+		return errors.New("daysteps/Parse() - bad data: steps")
 	}
 
 	timeDur, err := time.ParseDuration(splittedData[1])
-	if err != nil || timeDur <= 0 {
-		return fmt.Errorf("bad data: time")
+	if err != nil {
+		return err
+	}
+	if timeDur <= 0 {
+		return errors.New("daysteps/Parse() - bad data: time")
 	}
 	// Сохраняем расшитые данные в поля структуры
 	ds.Steps = steps

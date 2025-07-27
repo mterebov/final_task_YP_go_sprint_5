@@ -2,7 +2,14 @@ package spentenergy
 
 import (
 	"time"
-	"fmt"
+	"errors"
+)
+
+var (
+	ErrBadSteps = errors.New("spentenergy - bad data: steps")
+	ErrBadWeight = errors.New("spentenergy - bad data: weight")
+	ErrBadHeight = errors.New("spentenergy - bad data: height")
+	ErrBadDuration = errors.New("spentenergy - bad data: duration")
 )
 
 // Основные константы, необходимые для расчетов.
@@ -15,8 +22,15 @@ const (
 
 func WalkingSpentCalories(steps int, weight, height float64, duration time.Duration) (float64, error) {
 	// Проверка входных данных
-	if steps <= 0 || weight <= 0 || height <= 0 || duration <= 0 {
-		return 0, fmt.Errorf("bad data")
+	switch {
+	case steps <= 0:
+		return 0, ErrBadSteps
+	case weight <= 0:
+		return 0, ErrBadWeight
+	case height <= 0:
+		return 0, ErrBadHeight
+	case duration <= 0:
+		return 0, ErrBadDuration
 	}
 	// Подсчет средней скорости и  затраченных калорий
 	meanSpeed := MeanSpeed(steps, height, duration)
@@ -26,8 +40,15 @@ func WalkingSpentCalories(steps int, weight, height float64, duration time.Durat
 
 func RunningSpentCalories(steps int, weight, height float64, duration time.Duration) (float64, error) {
 	// Проверка входных данных
-	if steps <= 0 || weight <= 0 || height <= 0 || duration <= 0 {
-		return 0, fmt.Errorf("bad data")
+	switch {
+	case steps <= 0:
+		return 0, ErrBadSteps
+	case weight <= 0:
+		return 0, ErrBadWeight
+	case height <= 0:
+		return 0, ErrBadHeight
+	case duration <= 0:
+		return 0, ErrBadDuration
 	}
 	// Подсчет средней скорости и  затраченных калорий
 	meanSpeed := MeanSpeed(steps, height, duration)
